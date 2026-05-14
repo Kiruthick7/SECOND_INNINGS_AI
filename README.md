@@ -68,6 +68,8 @@ This project is optimized for a serverless, scale-to-zero architecture to keep h
    gcloud builds submit --config cloudbuild.yaml .
    ```
 
+> **Note for Local Docker Builds**: If you are building the Docker image locally (especially on an Apple Silicon M-series Mac) to push to the artifact registry manually, the `Dockerfile` is already configured with `FROM --platform=linux/amd64` to ensure compatibility with Google Cloud Run.
+
 ## 💰 Architecture & Cost Optimization
 - **Google Cloud Run**: Scales to zero when no fans are active, ensuring minimal baseline costs.
 - **GROQ AI**: Chosen for its ultra-low latency and extreme cost-effectiveness compared to traditional LLMs, perfect for high-frequency live match updates.
