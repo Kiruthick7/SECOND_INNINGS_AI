@@ -27,9 +27,8 @@ export default function EventChronology() {
       try {
         const response = await fetch("https://site.api.espn.com/apis/site/v2/sports/cricket/8048/playbyplay?event=1529301");
         const data = await response.json();
-        
+
         if (data?.commentary?.items) {
-          // Sort events by timestamp descending (newest first)
           const sortedEvents = data.commentary.items.sort(
             (a: CommentaryItem, b: CommentaryItem) => b.bbbTimestamp - a.bbbTimestamp
           );
@@ -43,7 +42,7 @@ export default function EventChronology() {
     }
 
     fetchCommentary();
-    const timer = setInterval(fetchCommentary, 15000); // Poll every 15s
+    const timer = setInterval(fetchCommentary, 15000);
     return () => clearInterval(timer);
   }, []);
 
@@ -72,10 +71,10 @@ export default function EventChronology() {
               const isWicket = event.dismissal?.dismissal;
               const isBoundary = event.scoreValue === 4 || event.scoreValue === 6;
               const isDot = event.scoreValue === 0 && !isWicket;
-              
+
               let badgeColor = "bg-white/5 text-white/50 border-white/10";
               let badgeText = event.scoreValue.toString();
-              
+
               if (isWicket) {
                 badgeColor = "bg-red-500/20 text-red-500 border-red-500/30";
                 badgeText = "W";
@@ -102,9 +101,9 @@ export default function EventChronology() {
                       {badgeText}
                     </div>
                   </div>
-                  
-                  <div className={"flex-1 p-3 rounded-xl border transition-colors duration-300 " + 
-                    (isWicket ? "bg-red-500/5 border-red-500/20" : 
+
+                  <div className={"flex-1 p-3 rounded-xl border transition-colors duration-300 " +
+                    (isWicket ? "bg-red-500/5 border-red-500/20" :
                      isBoundary ? "bg-white/5 border-white/10" : "bg-transparent border-transparent group-hover:bg-white/5")}>
                     <p className={"text-sm " + (isWicket || isBoundary ? "text-white font-medium" : "text-white/70")}>
                       {event.text}

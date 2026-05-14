@@ -42,7 +42,6 @@ export default function MomentumMeter({ data }: { data: MomentumData }) {
       </div>
 
       <div className="relative h-24 flex items-center gap-1 mb-6">
-        {/* Simple Bar Visualization */}
         <div className="flex-1 h-12 bg-white/5 rounded-full relative overflow-hidden flex items-center px-4">
           <motion.div
             initial={{ width: "50%" }}
@@ -78,7 +77,6 @@ export default function MomentumMeter({ data }: { data: MomentumData }) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Decorative Glow */}
       <div className="absolute -top-10 -right-10 w-40 h-40 bg-neon-green/10 blur-[80px] rounded-full pointer-events-none" />
       <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-neon-blue/10 blur-[80px] rounded-full pointer-events-none" />
     </div>

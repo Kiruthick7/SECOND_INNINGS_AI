@@ -37,13 +37,12 @@ export default function Dashboard() {
     }
 
     loadMatchData();
-    const timer = setInterval(loadMatchData, 30000);
+    const timer = setInterval(loadMatchData, 10000);
     return () => clearInterval(timer);
   }, []);
 
   return (
     <div className="space-y-6">
-      {/* Match Overview */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -51,7 +50,6 @@ export default function Dashboard() {
         <MatchCard {...matchData} />
       </motion.section>
 
-      {/* AI Momentum Section */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -67,7 +65,6 @@ export default function Dashboard() {
         }} />
       </motion.section>
 
-      {/* Predictions Section */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -100,7 +97,6 @@ export default function Dashboard() {
         />
       </motion.section>
 
-      {/* Quick Stats Grid - Only show if in 2nd innings / target exists */}
       {(matchData.target || matchData.requiredRR) && (
         <div className="grid grid-cols-2 gap-4 pb-8">
           {matchData.target && (

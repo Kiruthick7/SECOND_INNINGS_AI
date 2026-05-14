@@ -42,8 +42,8 @@ export default function MatchCard({ battingTeam, bowlingTeam, score, overs, winP
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: i * 0.1 }}
             className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-sm border ${
-              ball === "W" ? "bg-neon-red border-neon-red text-white" : 
-              ball === "4" || ball === "6" ? "bg-neon-green border-neon-green text-black" : 
+              ball === "W" ? "bg-neon-red border-neon-red text-white" :
+              ball === "4" || ball === "6" ? "bg-neon-green border-neon-green text-black" :
               "border-white/20 text-white/60"
             }`}
           >
@@ -58,12 +58,12 @@ export default function MatchCard({ battingTeam, bowlingTeam, score, overs, winP
           <span className="text-neon-green">Live Feed Updated</span>
         </div>
         <div className="h-4 bg-white/5 rounded-full flex overflow-hidden border border-white/5">
-          <motion.div 
+          <motion.div
             initial={{ width: "50%" }}
             animate={{ width: `${winProb.teamA}%` }}
             className="h-full bg-neon-green shadow-[0_0_15px_rgba(204,255,0,0.5)]"
           />
-          <motion.div 
+          <motion.div
             initial={{ width: "50%" }}
             animate={{ width: `${winProb.teamB}%` }}
             className="h-full bg-neon-blue shadow-[0_0_15px_rgba(0,240,255,0.5)]"
@@ -75,7 +75,6 @@ export default function MatchCard({ battingTeam, bowlingTeam, score, overs, winP
         </div>
       </div>
 
-      {/* Decorative lines */}
       <div className="absolute top-0 right-0 w-24 h-24 border-t-2 border-r-2 border-white/5 rounded-tr-3xl pointer-events-none" />
     </div>
   );

@@ -95,7 +95,6 @@ export default function PredictionModal({ question, options, xpReward }: Predict
         </motion.div>
       )}
 
-      {/* Hover Background Effect */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-neon-green/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
     </div>
   );

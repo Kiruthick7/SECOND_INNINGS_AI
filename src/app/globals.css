@@ -32,7 +32,7 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background-image: 
+    background-image:
       radial-gradient(at 0% 0%, hsla(222, 84%, 10%, 1) 0, transparent 50%),
       radial-gradient(at 50% 0%, hsla(74, 100%, 5%, 1) 0, transparent 50%),
       radial-gradient(at 100% 0%, hsla(186, 100%, 5%, 1) 0, transparent 50%);
@@ -44,7 +44,7 @@
   .glass {
     @apply bg-white/5 backdrop-blur-lg border border-white/10;
   }
-  
+
   .neon-border {
     @apply border-primary shadow-[0_0_10px_rgba(204,255,0,0.3)];
   }
@@ -54,7 +54,6 @@
   }
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
