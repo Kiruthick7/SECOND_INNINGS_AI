@@ -37,9 +37,8 @@ export default function MatchCard({ teamA, teamB, winProb, lastSix, status, resu
           <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Live Updates</span>
         </div>
       </div>
-      
+
       <div className="flex items-center justify-between mb-8 px-4">
-        {/* Team A */}
         <div className={`flex-1 flex flex-col items-start ${teamA.isBatting ? "opacity-100 scale-105" : "opacity-60"} transition-all duration-500`}>
           <div className="flex items-center gap-3 mb-2">
             <h2 className="text-4xl font-black italic tracking-tighter leading-none">
@@ -59,7 +58,6 @@ export default function MatchCard({ teamA, teamB, winProb, lastSix, status, resu
 
         <div className="px-8 text-xl font-black italic text-white/10 select-none">VS</div>
 
-        {/* Team B */}
         <div className={`flex-1 flex flex-col items-end text-right ${teamB.isBatting ? "opacity-100 scale-105" : "opacity-60"} transition-all duration-500`}>
           <div className="flex items-center gap-3 mb-2">
             {teamB.isBatting && (
