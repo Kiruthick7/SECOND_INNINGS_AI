@@ -1,101 +1,122 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useEffect } from "react";
+import MatchCard from "@/components/MatchCard";
+import MomentumMeter from "@/components/MomentumMeter";
+import PredictionModal from "@/components/PredictionModal";
+import { motion } from "framer-motion";
+import { fetchIPLData, MatchData } from "@/lib/api";
+
+export default function Dashboard() {
+  const [matchData, setMatchData] = useState<MatchData>({
+    battingTeam: "IPL",
+    bowlingTeam: "T20",
+    score: "0/0",
+    overs: "0.0",
+    winProb: { teamA: 50, teamB: 50 },
+    lastSix: ["-", "-", "-", "-", "-", "-"],
+    status: "Loading..."
+  });
+
+  const [momentum] = useState({
+    teamA: 45,
+    teamB: 55,
+    trend: "up" as "up" | "down" | "neutral"
+  });
+
+  const hasWicket = matchData.lastSix.includes("W");
+  const currentTrend = hasWicket ? "down" as const : "up" as const;
+  const explanation = `${matchData.battingTeam}'s momentum shifted significantly after the loss of Priyansh Arya (W). They are now rebuilding at ${matchData.score}.`;
+
+  useEffect(() => {
+    async function loadMatchData() {
+      const data = await fetchIPLData();
+      if (data) {
+        setMatchData(data);
+      }
+    }
+
+    loadMatchData();
+    const timer = setInterval(loadMatchData, 30000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="space-y-6">
+      {/* Match Overview */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <MatchCard {...matchData} />
+      </motion.section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* AI Momentum Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+      >
+        <MomentumMeter data={{
+          teamA: momentum.teamA,
+          teamB: momentum.teamB,
+          teamAName: matchData.battingTeam,
+          teamBName: matchData.bowlingTeam,
+          explanation: explanation,
+          trend: currentTrend
+        }} />
+      </motion.section>
+
+      {/* Predictions Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="space-y-4"
+      >
+        <div className="flex justify-between items-center px-2">
+          <h2 className="text-sm font-bold uppercase tracking-widest text-white/40">Active Challenges</h2>
+          <span className="text-neon-green text-[10px] font-bold animate-pulse">2 NEW</span>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <PredictionModal
+          question="How many runs in the next over?"
+          xpReward={250}
+          options={[
+            { id: "1", label: "0-5 Runs", odds: "1.5x" },
+            { id: "2", label: "6-10 Runs", odds: "2.8x" },
+            { id: "3", label: "11+ Runs", odds: "5.2x" },
+          ]}
+        />
+
+        <PredictionModal
+          question="Next Wicket Method?"
+          xpReward={500}
+          options={[
+            { id: "c", label: "Caught", odds: "1.2x" },
+            { id: "b", label: "Bowled", odds: "4.5x" },
+            { id: "l", label: "LBW", odds: "6.0x" },
+          ]}
+        />
+      </motion.section>
+
+      {/* Quick Stats Grid - Only show if in 2nd innings / target exists */}
+      {(matchData.target || matchData.requiredRR) && (
+        <div className="grid grid-cols-2 gap-4 pb-8">
+          {matchData.target && (
+            <div className="glass p-4 rounded-2xl border border-white/5">
+              <div className="text-[10px] font-bold text-white/30 uppercase mb-1">Target</div>
+              <div className="text-xl font-black italic">{matchData.target} Runs</div>
+            </div>
+          )}
+          {matchData.requiredRR && (
+            <div className="glass p-4 rounded-2xl border border-white/5">
+              <div className="text-[10px] font-bold text-white/30 uppercase mb-1">Required RR</div>
+              <div className="text-xl font-black italic">{matchData.requiredRR}</div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
